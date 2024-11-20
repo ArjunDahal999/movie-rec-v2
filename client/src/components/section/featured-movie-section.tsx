@@ -19,6 +19,9 @@ import {
   SliderThumbItem,
 } from '@/components/ui/animated-carousel';
 
+import { Card } from '../ui/card';
+import { ScrollArea, ScrollBar } from '../ui/scroll-area';
+
 const config = [
   {
     director: 'Kevin Reynolds',
@@ -118,80 +121,22 @@ const FeaturedMovieSection = () => {
         Featured
         <span className="text-primary"> Movies</span>
       </h2>
-      <Carousel
-        orientation="horizontal"
-        className="flex flex-col items-center justify-center gap-2"
-      >
-        <CarouselThumbsContainer className="h-fit basis-1/4">
-          {config.map((movie, index) => (
-            <SliderThumbItem
-              key={index}
-              index={index}
-              className="rounded-md bg-transparent"
-            >
-              <Image
-                src={movie.imageUrl}
-                className="object-cover"
-                alt="data-image"
-                fill
-              />
-            </SliderThumbItem>
-          ))}
-        </CarouselThumbsContainer>
-        <div className="relative w-[90%]">
-          <CarouselMainContainer className="h-full">
-            {config.map((movie, index) => (
-              <SliderMainItem
-                key={index}
-                className="relative flex items-center justify-evenly rounded-md"
-              >
-                <div className="group relative">
-                  <Link href={`/movie/${movie.title}`}>
-                    <div className="absolute bottom-0 z-[10] hidden h-[450px] w-[300px] items-center justify-center bg-background/40 transition duration-700 ease-in-out group-hover:flex">
-                      <PlayCircleIcon size={60} className="text-primary" />
-                    </div>
-                    <Image
-                      src={movie.imageUrl}
-                      alt="data-image"
-                      className="object-contain"
-                      height={400}
-                      width={300}
-                    />
-                  </Link>
-                </div>
-
-                <div className="w-96">
-                  <h3 className="mb-4 text-2xl font-semibold text-primary">
-                    {movie.title}
-                  </h3>
-                  <div className="space-y-2">
-                    <p className="flex items-center gap-2">
-                      <UserIcon className="h-5 w-5 text-primary" />
-                      <span className="font-medium">Director:</span>{' '}
-                      {movie.director}
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <CalendarIcon className="h-5 w-5 text-primary" />
-                      <span className="font-medium">Release Date:</span>{' '}
-                      {movie.release_date}
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <StarIcon className="h-5 w-5 text-primary" />
-                      <span className="font-medium">Popularity:</span>{' '}
-                      {movie.popularity.toFixed(2)}
-                    </p>
-                    <p className="flex items-center gap-2">
-                      <DollarSignIcon className="h-5 w-5 text-primary" />
-                      <span className="font-medium">Revenue:</span> $
-                      {movie.revenue.toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              </SliderMainItem>
-            ))}
-          </CarouselMainContainer>
+      <ScrollArea>
+        <div className="flex gap-x-2">
+          {config.map((m, i) => {
+            return (
+              <Card className="w-64">
+                <h1>{m.director}</h1>
+                <h1>{m.popularity}</h1>
+                <h1>{m.release_date}</h1>
+                <h1>{m.revenue}</h1>
+                <h1>{m.title}</h1>
+              </Card>
+            );
+          })}
         </div>
-      </Carousel>
+        <ScrollBar orientation="horizontal" />
+      </ScrollArea>
     </section>
   );
 };

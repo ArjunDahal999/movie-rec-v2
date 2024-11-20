@@ -6,6 +6,8 @@ import { MovieType } from '@/types';
 
 import { Bookmark, VideoIcon } from 'lucide-react';
 
+import { formatRevenue } from '@/lib/format-revenue';
+
 import GetLazyImage from '@/components/lazy-image';
 import { Button } from '@/components/ui/button';
 
@@ -60,7 +62,7 @@ const MainMovie = ({ movieData }: { movieData: MovieType | null }) => {
             </div>
             <div>
               <div className="text-gray-500 dark:text-gray-400">Revenue</div>
-              <div>${movieData?.revenue}</div>
+              <div>{formatRevenue(movieData?.revenue!)}</div>
             </div>
             <div>
               <div className="text-gray-500 dark:text-gray-400">Runtime</div>

@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import { getTopGrossingMovie } from '@/action/get-top-grossing-movies';
 
+import { formatRevenue } from '@/lib/format-revenue';
+
 import { Card, CardContent } from '@/components/ui/card';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 
@@ -67,15 +69,6 @@ export default async function TopGrossingMovieSection() {
 
   const { data } = await getTopGrossingMovie();
 
-  const formatRevenue = (revenue: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(revenue);
-  };
-
   return (
     <div className="container mx-auto bg-background p-6">
       <h2 className="mb-4 text-center text-5xl font-bold">
@@ -88,19 +81,13 @@ export default async function TopGrossingMovieSection() {
               <CardContent className="p-4">
                 <div className="max-h-[300px] max-w-[300px] overflow-hidden rounded-xl">
                   <Link href={`/movie/${movie.title}`}>
-                    <Suspense
-                      fallback={
-                        <Image
-                          alt="Movie Poster"
-                          className="objecy-contain cursor-pointer overflow-hidden rounded-xl transition duration-500 hover:scale-110"
-                          height={400}
-                          src={'/placeholder.svg'}
-                          width={400}
-                        />
-                      }
-                    >
-                      <GetLazyImage title={movie?.title!} />
-                    </Suspense>
+                    <Image
+                      alt="Movie Poster"
+                      className="objecy-contain cursor-pointer overflow-hidden rounded-xl transition duration-500 hover:scale-110"
+                      height={400}
+                      src={'/placeholder.svg'}
+                      width={400}
+                    />
                   </Link>
                 </div>
                 <h3 className="line-clamp-1 text-lg font-semibold">

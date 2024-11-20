@@ -56,11 +56,12 @@ export default function MovieFlixHero() {
                       onBlur={() => setIsFocus(false)}
                       value={value}
                       onChange={handleChange}
+                      autoComplete="off"
                       className="h-full bg-transparent placeholder:text-gray-400"
                       id="movie"
                       placeholder="Search movies & TV shows"
                     />
-                    {searchText.length > 0 && (
+                    {isOnFocus && searchText.length > 0 && (
                       <AutoSuggestionBox movieName={searchText} />
                     )}
                   </div>

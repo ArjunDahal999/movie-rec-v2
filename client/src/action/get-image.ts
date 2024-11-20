@@ -9,6 +9,6 @@ export const getImage = cache(async ({ title }: { title: string }) => {
     );
     return imageData?.data?.movies[0]?.urlPoster;
   } catch (error) {
-    console.log(error);
+    return '/placeholder.svg';
   }
 });

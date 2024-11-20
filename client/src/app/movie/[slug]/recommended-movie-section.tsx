@@ -3,8 +3,9 @@ import React, { Suspense } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { getTopGrossingMovie } from '@/action/get-top-grossing-movies';
 import { MoviesType } from '@/types';
+
+import { formatRevenue } from '@/lib/format-revenue';
 
 import GetLazyImage from '@/components/lazy-image';
 import { Card, CardContent } from '@/components/ui/card';
@@ -14,6 +15,7 @@ const RecommendedMovieSection = ({
 }: {
   recommendedData: MoviesType[];
 }) => {
+  console.log(recommendedData);
   return (
     <section>
       <h2 className="text-center text-5xl font-bold">
@@ -46,7 +48,9 @@ const RecommendedMovieSection = ({
                 <p className="mb-1 text-sm text-muted-foreground">
                   Dir. {movie?.director}
                 </p>
-                <p className="text-sm font-medium">${movie?.revenue!}</p>
+                <p className="text-sm font-medium">
+                  {formatRevenue(movie?.revenue!)}
+                </p>
               </CardContent>
             </Card>
           </Link>
