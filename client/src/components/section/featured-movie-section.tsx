@@ -1,27 +1,6 @@
 'use client';
 
-import Image from 'next/image';
-import Link from 'next/link';
-
-import {
-  CalendarIcon,
-  DollarSignIcon,
-  PlayCircleIcon,
-  StarIcon,
-  UserIcon,
-} from 'lucide-react';
-
-import {
-  Carousel,
-  CarouselMainContainer,
-  CarouselThumbsContainer,
-  SliderMainItem,
-  SliderThumbItem,
-} from '@/components/ui/animated-carousel';
-
 import MovieContainer from '../movie-container';
-import { Card } from '../ui/card';
-import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 
 const config = [
   {

@@ -1,11 +1,7 @@
 import React, { Suspense } from 'react';
 
-import Image from 'next/image';
-
 import getTopRatedMovieSection from '@/action/get-top-rated-movie-section';
 
-import { TopRatedMoviePoster } from '../../../public/images';
-import { DialogBasicTwo } from '../animation/animated-movie-list';
 import MovieContainer from '../movie-container';
 
 const TopRatedMovieSection = async () => {
