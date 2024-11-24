@@ -1,13 +1,13 @@
 import { ApiResponse, MoviesType } from '@/types';
 import axios from 'axios';
 
-import { apiClientWithoutHeader } from '@/lib/axios-config';
+import { pythonApiClientWithoutHeader } from '@/lib/axios-config';
 
 export const getTopGrossingMovie = async (): Promise<
   ApiResponse<MoviesType[] | undefined>
 > => {
   try {
-    const response = await apiClientWithoutHeader.get(
+    const response = await pythonApiClientWithoutHeader.get(
       '/highest-grossing-movie'
     );
     return {

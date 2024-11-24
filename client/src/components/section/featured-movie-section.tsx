@@ -19,6 +19,7 @@ import {
   SliderThumbItem,
 } from '@/components/ui/animated-carousel';
 
+import MovieContainer from '../movie-container';
 import { Card } from '../ui/card';
 import { ScrollArea, ScrollBar } from '../ui/scroll-area';
 
@@ -116,27 +117,16 @@ const config = [
 ];
 const FeaturedMovieSection = () => {
   return (
-    <section className="container mx-auto min-h-screen">
+    <section className="container mx-auto">
       <h2 className="py-12 text-center text-5xl font-bold">
         Featured
         <span className="text-primary"> Movies</span>
       </h2>
-      <ScrollArea>
-        <div className="flex gap-x-2">
-          {config.map((m, i) => {
-            return (
-              <Card className="w-64">
-                <h1>{m.director}</h1>
-                <h1>{m.popularity}</h1>
-                <h1>{m.release_date}</h1>
-                <h1>{m.revenue}</h1>
-                <h1>{m.title}</h1>
-              </Card>
-            );
-          })}
-        </div>
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+
+      <MovieContainer
+        // @ts-ignore
+        data={config!}
+      />
     </section>
   );
 };

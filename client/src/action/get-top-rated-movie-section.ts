@@ -1,12 +1,14 @@
 import { ApiResponse, MoviesType } from '@/types';
 
-import { apiClientWithoutHeader } from '@/lib/axios-config';
+import { pythonApiClientWithoutHeader } from '@/lib/axios-config';
 
 const getTopRatedMovieSection = async (): Promise<
   ApiResponse<MoviesType[] | undefined>
 > => {
   try {
-    const response = await apiClientWithoutHeader.get('/top-popular-movies');
+    const response = await pythonApiClientWithoutHeader.get(
+      '/top-popular-movies'
+    );
     return {
       success: true,
       data: response.data.data,

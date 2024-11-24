@@ -3,6 +3,9 @@
 import { useState } from 'react';
 
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
+import { AxiosError } from 'axios';
+
+import { nodeApiClientWithoutHeader } from '@/lib/axios-config';
 
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -20,26 +23,27 @@ import { Label } from '@/components/ui/label';
 export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
-
-    if (!email || !password) {
-      setError('Please fill in all fields');
-      return;
+  const handleSubmit = async (e: React.FormEvent) => {
+    try {
+      e.preventDefault();
+      console.log('ererer');
+      const { data } = await nodeApiClientWithoutHeader.post(
+        '/loginToAccount',
+        {
+          email,
+          password,
+        }
+      );
+      console.log(data);
+    } catch (error: any) {
+      console.log('ererer');
+      if (error.response && error.response.data) {
+        console.log(error.response.data.message);
+      } else {
+        console.log(error.message);
+      }
     }
-
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email address');
-      return;
-    }
-
-    // Here you would typically call your authentication API
-    console.log('Login attempt', { email, password });
-    // For demo purposes, let's just log the attempt
-    alert('Login attempt successful! Check the console for details.');
   };
 
   return (
@@ -74,12 +78,6 @@ export default function LoginForm() {
                 required
               />
             </div>
-            {error && (
-              <Alert variant="destructive">
-                <ExclamationTriangleIcon className="h-4 w-4" />
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )}
           </CardContent>
           <CardFooter>
             <Button type="submit" className="w-full">

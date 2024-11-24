@@ -22,7 +22,6 @@ import AutoSuggestionBox from '../auto-suggestion-box';
 
 export default function MovieFlixHero() {
   const [value, setValue] = useState(''); // Immediate value
-  const [isOnFocus, setIsFocus] = useState(false);
   const [searchText, setSearchText] = useDebouncedState('', 500);
 
   // Update both the immediate and debounced states
@@ -52,8 +51,6 @@ export default function MovieFlixHero() {
                       Search movies & TV shows
                     </Label>
                     <Input
-                      onFocus={() => setIsFocus(true)}
-                      onBlur={() => setIsFocus(false)}
                       value={value}
                       onChange={handleChange}
                       autoComplete="off"
@@ -61,7 +58,7 @@ export default function MovieFlixHero() {
                       id="movie"
                       placeholder="Search movies & TV shows"
                     />
-                    {isOnFocus && searchText.length > 0 && (
+                    {searchText.length > 0 && (
                       <AutoSuggestionBox movieName={searchText} />
                     )}
                   </div>
