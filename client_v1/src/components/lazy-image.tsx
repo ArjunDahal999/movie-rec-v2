@@ -19,6 +19,15 @@ const GetLazyImage = async ({ title }: { title: any }): Promise<any> => {
           src={imageData?.data?.movies[0]?.urlPoster!}
         />
       );
+    return (
+      <Image
+        alt="Movie Poster"
+        className="mx-auto aspect-[2/3] overflow-hidden rounded-xl object-cover sm:w-full lg:order-last"
+        height="825"
+        width="550"
+        src={'/placeholder.svg'}
+      />
+    );
   } catch (error) {
     return (
       <Image

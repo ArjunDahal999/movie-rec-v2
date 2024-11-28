@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #121212;
+        color: #e0e0e0;
+        text-align: center;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h3 {
+        color: #ff1744;
+      }
+
+      .container {
+        background-color: #1e1e1e;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+        display: inline-block;
+        max-width: 600px;
+        margin: 20px auto;
+      }
+
+      h6 {
+        color: #b0bec5;
+        margin: 10px 0;
+      }
+
+      .button {
+        background-color: #ff1744;
+        color: #fff;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 20px;
+        transition: background-color 0.3s;
+      }
+
+      .button:hover {
+        background-color: #d50000;
+      }
+
+      p {
+        color: #757575;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h3>MoviesFlix</h3>
+    <div class="container">
+      <h6>Thank you for registering with us</h6>
+      <h6>Please click the button below to complete your registration</h6>
+      <a
+        href="http://localhost:3000/auth/activate-email?email=<%= email %>&token=<%= encodeURIComponent(activationToken) %>"
+        class="button">
+        Activate Account
+      </a>
+
+      <h6>Your Activation Token: <%= activationToken %></h6>
+      <p>If you haven't registered in Simotap, kindly ignore, please.</p>
+    </div>
+  </body>
+</html>

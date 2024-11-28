@@ -9,6 +9,7 @@ import { formatRevenue } from '@/lib/format-revenue';
 
 import { Card, CardContent } from '@/components/ui/card';
 
+import GetLazyImage from './lazy-image';
 import { ScrollArea, ScrollBar } from './ui/scroll-area';
 
 const MovieContainer = ({ data }: { data: MoviesType[] }) => {
@@ -20,13 +21,7 @@ const MovieContainer = ({ data }: { data: MoviesType[] }) => {
             <CardContent className="p-4">
               <div className="max-h-[300px] max-w-[300px] overflow-hidden rounded-xl">
                 <Link href={`/movie/${movie.title}`}>
-                  <Image
-                    alt="Movie Poster"
-                    className="cursor-pointer overflow-hidden rounded-xl object-contain opacity-10 transition duration-500 hover:scale-110"
-                    height={400}
-                    src={'/placeholder.svg'}
-                    width={400}
-                  />
+                  <GetLazyImage title={movie.title} />
                 </Link>
               </div>
               <h3 className="line-clamp-1 text-lg font-semibold">
