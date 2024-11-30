@@ -3,27 +3,27 @@ name: Conditional CD for Movie API
 on:
   push:
     branches:
-      - main  # Trigger on push to the main branch
+      - main # Trigger on push to the main branch
     paths:
-      - 'movie-api/**'  # Only trigger if changes occur in the movie-api folder
-  workflow_dispatch:  # Allow manual triggering of the workflow
+      - "movie-api/**" # Only trigger if changes occur in the movie-api folder
+  workflow_dispatch: # Allow manual triggering of the workflow
 
 jobs:
   deploy-movie-api:
-    runs-on: self-hosted  # Use the self-hosted runner
+    runs-on: self-hosted # Use the self-hosted runner
 
     steps:
       # Step 1: Checkout the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Navigate to the project and deploy
+      # Step 2: Deploy Movie API
       - name: Deploy Movie API
         run: |
           # Navigate to the movie-api directory
-          cd /path/to/your/movie-api
+          cd ~/movie-rec-v2/movie-api
 
-          # Pull the latest changes (handled by the self-hosted runner)
+          # Pull the latest changes
           git pull origin main
 
           # Activate virtual environment
