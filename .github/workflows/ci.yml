@@ -1,41 +1,41 @@
 name: CI Pipeline
-
 on:
   push:
     branches: ["main"]
-
 jobs:
   deploy-movie-api:
-    runs-on: self-hosted # Use the self-hosted runner
-
+    runs-on: self-hosted
     steps:
       # Step 1: Checkout the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Debug Directory Structure
-      - name: Debug Directory Structure
-        run: |
-          echo "Listing root directory:"
-          ls -al /
-          echo "Listing home directory:"
-          ls -al /home/ubuntu
-          echo "Listing runner working directory:"
-          ls -al /home/ubuntu/actions-runner/_work/
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.12"
 
       # Step 3: Deploy Movie API
       - name: Deploy Movie API
         run: |
           # Navigate to the working directory of the repo
-          cd /home/ubuntu/movie-rec-v2/movie.api || exit 1
+          cd /home/ubuntu/movie-rec-v2/movie.api
 
           # Activate the virtual environment
           source /home/ubuntu/.venv/bin/activate
 
           # Pull latest changes
-          git pull 
+          git pull
 
+          # Install requirements
           pip install -r requirements.txt
 
-          # Restart the FastAPI server
-          screen python3 -m uvicorn main:app
+          # Stop any existing uvicorn process
+          pkill -f "uvicorn main:app" || true
+
+          # Start uvicorn in the background
+          nohup uvicorn main:app --host 0.0.0.0 --port 8000 &
+
+          # Give a moment for the server to start
+          sleep 5
