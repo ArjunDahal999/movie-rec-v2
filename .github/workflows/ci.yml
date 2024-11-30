@@ -28,13 +28,13 @@ jobs:
         run: |
           # Navigate to the working directory of the repo
           cd /home/ubuntu/actions-runner/_work/movie-rec-v2/movie-rec-v2/movie.api || exit 1
-          
+
           # Activate the virtual environment
           source /home/ubuntu/.venv/bin/activate
-          
+
           # Pull latest changes
-          git pull origin main
-          
+          git pull 
+
           # Restart the FastAPI server
           pkill -f "uvicorn" || true
           nohup uvicorn main:app --host 0.0.0.0 --port 8000 > log.txt 2>&1 &
