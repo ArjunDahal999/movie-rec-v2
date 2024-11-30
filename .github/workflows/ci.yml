@@ -17,19 +17,10 @@ jobs:
       - name: Deploy Movie API
         run: |
           # Navigate to the movie-api directory
-          cd /
-          ls
-
-          python3 -m venv venv
-
+          # cd /
           source venv/bin/activate
-
-          # Pull the latest changes
+          cd movie-rec-v2/movie.api
           git pull origin main
-
-          # Install dependencies
-          pip install -r requirements.txt
-
           # Restart the FastAPI server
           pkill -f "uvicorn" || true
           nohup uvicorn main:app --host 0.0.0.0 --port 8000 > log.txt 2>&1 &
