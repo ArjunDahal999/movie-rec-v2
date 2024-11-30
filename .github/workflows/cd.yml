@@ -20,14 +20,14 @@ jobs:
       # Step 2: Deploy Movie API
       - name: Deploy Movie API
         run: |
+          # Activate virtual environment
+          source venv/bin/activate
           # Navigate to the movie-api directory
           cd ~/movie-rec-v2/movie-api
 
           # Pull the latest changes
           git pull origin main
 
-          # Activate virtual environment
-          source venv/bin/activate
 
           # Install dependencies
           pip install -r requirements.txt
