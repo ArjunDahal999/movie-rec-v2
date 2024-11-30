@@ -131,7 +131,7 @@ def predict_movies(movie: str, top_n: int = 15):
 
 @app.get('/')
 def home():
-    return {"status": "9999999df999 "}
+    return {"status": "s "}
 
 @app.get('/predict/{moviename}')
 def predict_movies_endpoint(moviename: str):
