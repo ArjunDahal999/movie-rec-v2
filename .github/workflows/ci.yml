@@ -17,7 +17,7 @@ jobs:
       - name: Deploy Movie API
         run: |
           # Navigate to the movie-api directory
-          cd /home/ubuntu/actions-runner/_work/movie-rec-v2
+          ls
 
           python3 -m venv venv
 
