@@ -108,7 +108,6 @@ tfidf_vectors = compute_tfidf(combined_features) # [{"action": 0.67, "sci-fi": 0
 def predict_movies(movie: str, top_n: int = 15):
     list_of_all_titles = movie_data['title'].tolist() # ['Avatar','Aveneger']
     find_close_match = difflib.get_close_matches(movie, list_of_all_titles) #returns list similar title 
-    print(find_close_match)
     if not find_close_match:
         return []
     close_match = find_close_match[0]
@@ -124,7 +123,6 @@ def predict_movies(movie: str, top_n: int = 15):
         similarity_scores.append((i, score))
 
     # Sort by similarity score
-    print(similarity_scores)
     sorted_similar_movies = sorted(similarity_scores, key=lambda x: x[1], reverse=True)
     # sorted_similar_movies = sorted(euclid_distance, key=lambda x: x[1], reverse=False)
     

@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, Image, ScrollView } from 'react-native';
-import { MovieDetailsType } from './[title]';
 import { Ionicons } from '@expo/vector-icons';
 import GetLazyImage from '~/components/ui/Get-Image';
+import { MovieType } from '~/types';
 
-const MovieDetailContainer = ({ data }: { data: MovieDetailsType }) => {
+const MovieDetailContainer = ({ data }: { data: MovieType }) => {
   return (
     <View className=" bg-black">
       <View className="relative">

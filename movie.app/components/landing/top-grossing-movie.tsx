@@ -4,6 +4,9 @@ import GetLazyImage from '../ui/Get-Image';
 import { useQuery } from '@tanstack/react-query';
 import { MovieCard } from '../ui/Movie-card';
 import { FlashList } from '@shopify/flash-list';
+import getTopRatedMovieSection from '~/action/get-top-rated-movie-section';
+import { getTopGrossingMovie } from '~/action/get-top-grossing-movies';
+import { getFeaturedMovie } from '~/action/get-featured-movie';
 
 export type MovieDataType = {
   revenue: number;
@@ -14,17 +17,10 @@ export type MovieDataType = {
   overview: string;
 };
 
-const fetchTopGrossingMovies = async (): Promise<MovieDataType[] | undefined> => {
-  //const response = await fetch('http://13.49.18.64/highest-grossing-movie');
-  const response = await fetch('http://localhost:8000/highest-grossing-movie');
-  const jsonData = await response.json();
-  return jsonData.data;
-};
-
-const TopGrossingMovies = () => {
+const TopPopularMovies = () => {
   const { data, isLoading } = useQuery({
-    queryKey: ['highest-grossing-movies'],
-    queryFn: () => fetchTopGrossingMovies(),
+    queryKey: ['grossing-movies'],
+    queryFn: () => getTopGrossingMovie(),
     staleTime: 1000 * 60 * 60 * 24,
     retry: 1,
   });
@@ -35,11 +31,12 @@ const TopGrossingMovies = () => {
         <Text className="my-4 text-center text-3xl font-bold text-white">Top Grossing</Text>
         <Text className="mx-2 my-4 text-center text-3xl font-bold text-red-500">Movie</Text>
       </View>
+
       <ScrollView horizontal className=" ">
         <FlashList
-          data={data || []}
-          renderItem={({ item }) => <MovieCard key={item.title} data={item} />}
-          estimatedItemSize={10}
+          data={data?.data || []}
+          renderItem={({ item }) => <MovieCard data={item} />}
+          estimatedItemSize={200}
           horizontal
           showsHorizontalScrollIndicator={false}
         />
@@ -48,4 +45,4 @@ const TopGrossingMovies = () => {
   );
 };
 
-export default TopGrossingMovies;
+export default TopPopularMovies;

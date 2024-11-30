@@ -4,6 +4,7 @@ import GetLazyImage from '../ui/Get-Image';
 import { useQuery } from '@tanstack/react-query';
 import { MovieCard } from '../ui/Movie-card';
 import { FlashList } from '@shopify/flash-list';
+import getTopRatedMovieSection from '~/action/get-top-rated-movie-section';
 
 export type MovieDataType = {
   revenue: number;
@@ -14,21 +15,28 @@ export type MovieDataType = {
   overview: string;
 };
 
-const fetchPopular = async (): Promise<MovieDataType[] | undefined> => {
-  //const response = await fetch('http://13.49.18.64/top-popular-movies');
-  const response = await fetch('http://localhost:8000/top-popular-movies');
-
-  const jsonData = await response.json();
-  return jsonData.data;
-};
-
 const TopPopularMovies = () => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isPending, isError, isLoadingError } = useQuery({
     queryKey: ['popular-movies'],
-    queryFn: () => fetchPopular(),
+    queryFn: () => getTopRatedMovieSection(),
     staleTime: 1000 * 60 * 60 * 24,
     retry: 1,
   });
+
+  if (isLoading || isPending) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
+  if (isError || isLoadingError) {
+    return (
+      <View>
+        <Text>Something went wrong...</Text>
+      </View>
+    );
+  }
 
   return (
     <View className="h-[400px]">
@@ -39,7 +47,7 @@ const TopPopularMovies = () => {
 
       <ScrollView horizontal className=" ">
         <FlashList
-          data={data || []}
+          data={data?.data || []}
           renderItem={({ item }) => <MovieCard data={item} />}
           estimatedItemSize={200}
           horizontal

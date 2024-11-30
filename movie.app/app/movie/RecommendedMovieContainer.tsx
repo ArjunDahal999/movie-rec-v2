@@ -1,11 +1,11 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
-import { MovieDataType } from '~/components/landing/feature-movie';
 import GetLazyImage from '~/components/ui/Get-Image';
 import { MovieCard } from '~/components/ui/Movie-card';
+import { MoviesType } from '~/types';
 
-const RecommendedMovieContainer = ({ data }: { data: MovieDataType[] }) => {
+const RecommendedMovieContainer = ({ data }: { data: MoviesType[] }) => {
   return (
     <View className=" h-[450px] bg-black py-4">
       <View className="flex-row items-center justify-center">

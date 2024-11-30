@@ -3,60 +3,42 @@ import { View, Text, FlatList } from 'react-native';
 import GetLazyImage from '../ui/Get-Image';
 import { MovieCard } from '../ui/Movie-card';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-
-export type MovieDataType = {
-  revenue: number;
-  title: string;
-  director: string;
-  release_date: string;
-  popularity: number;
-  overview: string;
-};
-
-const fetchFeaturedMovie = async (): Promise<MovieDataType[]> => {
-  //  const response = await fetch('http://13.49.18.64/random-movie');
-  const response = await fetch('http://localhost:8000/random-movie');
-  const jsonData = await response.json();
-  return jsonData.data;
-};
+import { getFeaturedMovie } from '~/action/get-featured-movie';
+import { MoviesType, MovieType } from '~/types';
 
 const FeaturedMovie = () => {
-  const [data, setData] = useState<MovieDataType[]>([]);
+  const [data, setData] = useState<MoviesType[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const movies = await fetchFeaturedMovie();
-        console.log(movies);
-        setData(movies);
+        const movies = await getFeaturedMovie();
+        setData(movies.data!);
       } catch (error) {
-        console.error(error);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }
     };
-
     getData();
   }, []);
 
   isLoading && <Text>Loading...</Text>;
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView>
-        <View className="flex-row items-center justify-center">
-          <Text className="my-4 text-center text-3xl font-bold text-white">Featured</Text>
-          <Text className="mx-2 my-4 text-center text-3xl font-bold text-red-500">Movie</Text>
-        </View>
-        <FlatList
-          horizontal
-          data={data}
-          renderItem={({ item }) => <MovieCard data={item} />}
-          keyExtractor={(item) => item.title}
-        />
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <View className=" h-[450px]">
+      <View className="flex-row items-center justify-center">
+        <Text className="my-4 text-center text-3xl font-bold text-white">Featured</Text>
+        <Text className="mx-2 my-4 text-center text-3xl font-bold text-red-500">Movie</Text>
+      </View>
+      <FlatList
+        horizontal
+        data={data}
+        renderItem={({ item }) => <MovieCard data={item} />}
+        keyExtractor={(item) => item.title}
+      />
+    </View>
   );
 };
 
