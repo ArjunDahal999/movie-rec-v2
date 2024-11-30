@@ -6,36 +6,43 @@ jobs:
   deploy-movie-api:
     runs-on: self-hosted
     steps:
-      # Step 1: Checkout the repository
       - name: Checkout Code
         uses: actions/checkout@v3
+      
+      - name: Create Systemd Service File
+        run: |
+          # Create a systemd service file for the movie recommendation API
+          sudo tee /etc/systemd/system/movie-rec-api.service << EOL
+          [Unit]
+          Description=Movie Recommendation API
+          After=network.target
 
-      # Step 2: Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.12"
+          [Service]
+          User=ubuntu
+          WorkingDirectory=/home/ubuntu/movie-rec-v2/movie.api
+          Environment="PATH=/home/ubuntu/.venv/bin"
+          ExecStart=/home/ubuntu/.venv/bin/uvicorn main:app --host 0.0.0.0 --port 8000
+          Restart=always
+          RestartSec=5
 
-      # Step 3: Deploy Movie API
+          [Install]
+          WantedBy=multi-user.target
+          EOL
+
       - name: Deploy Movie API
         run: |
-          # Navigate to the working directory of the repo
+          # Navigate to the project directory
           cd /home/ubuntu/movie-rec-v2/movie.api
-
-          # Activate the virtual environment
+          
+          # Activate virtual environment and update requirements
           source /home/ubuntu/.venv/bin/activate
-
-          # Pull latest changes
           git pull
-
-          # Install requirements
           pip install -r requirements.txt
-
-          # Stop any existing uvicorn process
-          pkill -f "uvicorn main:app" || true
-
-          # Start uvicorn in the background
-          nohup uvicorn main:app --host 0.0.0.0 --port 8000 &
-
-          # Give a moment for the server to start
-          sleep 5
+          
+          # Reload systemd, restart the service
+          sudo systemctl daemon-reload
+          sudo systemctl restart movie-rec-api
+          sudo systemctl enable movie-rec-api
+          
+          # Optional: Check service status
+          sudo systemctl status movie-rec-api
