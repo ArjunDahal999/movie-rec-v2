@@ -18,12 +18,20 @@ export type MovieDataType = {
 };
 
 const TopPopularMovies = () => {
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, isPending } = useQuery({
     queryKey: ['grossing-movies'],
     queryFn: () => getTopGrossingMovie(),
     staleTime: 1000 * 60 * 60 * 24,
     retry: 1,
   });
+
+  if (isLoading || isPending) {
+    return (
+      <View>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <View className="h-[400px]">

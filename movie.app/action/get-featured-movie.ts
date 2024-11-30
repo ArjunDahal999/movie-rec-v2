@@ -6,7 +6,6 @@ import { pythonApiClientWithoutHeader } from '~/lib/axios-config';
 export const getFeaturedMovie = async (): Promise<ApiResponse<MoviesType[] | undefined>> => {
   try {
     const response = await pythonApiClientWithoutHeader.get('/random-movie');
-    console.log(response.data);
     return {
       success: true,
       data: response.data.data,

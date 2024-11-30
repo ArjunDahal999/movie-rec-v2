@@ -22,7 +22,7 @@ export default function MovieFlixHero() {
       </Text>
       <View className=" my-2">
         <TextInput
-          className="  w-full rounded-lg bg-white indent-2 text-black"
+          className="  w-full rounded-lg bg-white py-4 pl-4 indent-2 text-black"
           value={value}
           onChangeText={handleChange}
           autoComplete="off"

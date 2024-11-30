@@ -1,7 +1,6 @@
 import { FlashList } from '@shopify/flash-list';
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
-import GetLazyImage from '~/components/ui/Get-Image';
 import { MovieCard } from '~/components/ui/Movie-card';
 import { MoviesType } from '~/types';
 

@@ -17,7 +17,7 @@ export default function Home() {
           </View>
           <MovieFlixHero />
           <ScrollView className=" flex-1 ">
-            <FeaturedMovie />
+            {/* <FeaturedMovie /> */}
             <TopGrossingMovies />
             <TopPopularMovies />
           </ScrollView>
