@@ -17,7 +17,7 @@ app.add_middleware(
 )
 
 # Load movie data once at startup
-movie_data = pd.read_csv("test.csv", encoding="utf-8")
+movie_data = pd.read_csv("movies.csv", encoding="utf-8")
 
 # Preprocess movie data
 movie_data = movie_data.fillna({

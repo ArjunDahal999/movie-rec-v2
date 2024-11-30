@@ -15,7 +15,9 @@ export type MovieDataType = {
 };
 
 const fetchPopular = async (): Promise<MovieDataType[] | undefined> => {
-  const response = await fetch('http://13.49.18.64/top-popular-movies');
+  //const response = await fetch('http://13.49.18.64/top-popular-movies');
+  const response = await fetch('http://localhost:8000/top-popular-movies');
+
   const jsonData = await response.json();
   return jsonData.data;
 };

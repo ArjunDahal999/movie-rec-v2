@@ -14,7 +14,8 @@ export type MovieDataType = {
 };
 
 const fetchFeaturedMovie = async (): Promise<MovieDataType[]> => {
-  const response = await fetch('http://13.49.18.64/random-movie');
+  //  const response = await fetch('http://13.49.18.64/random-movie');
+  const response = await fetch('http://localhost:8000/random-movie');
   const jsonData = await response.json();
   return jsonData.data;
 };
@@ -27,6 +28,7 @@ const FeaturedMovie = () => {
     const getData = async () => {
       try {
         const movies = await fetchFeaturedMovie();
+        console.log(movies);
         setData(movies);
       } catch (error) {
         console.error(error);
