@@ -17,8 +17,10 @@ jobs:
       - name: Deploy Movie API
         run: |
           # Navigate to the movie-api directory
-          # cd /
-          source venv/bin/activate
+          cd /
+          cd home/ubuntu
+          source .venv/bin/activate
+          cd actions-runner/_work/movie-rec-v2/movie-rec-v2/movie.api
           cd movie-rec-v2/movie.api
           git pull origin main
           # Restart the FastAPI server
