@@ -13,17 +13,28 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Step 2: Deploy Movie API
+      # Step 2: Debug Directory Structure
+      - name: Debug Directory Structure
+        run: |
+          echo "Listing root directory:"
+          ls -al /
+          echo "Listing home directory:"
+          ls -al /home/ubuntu
+          echo "Listing runner working directory:"
+          ls -al /home/ubuntu/actions-runner/_work/
+
+      # Step 3: Deploy Movie API
       - name: Deploy Movie API
         run: |
-          # Navigate to the movie-api directory
-          cd /
-          ls
-          cd home/ubuntu
-          source .venv/bin/activate
-          cd actions-runner/_work/movie-rec-v2/movie-rec-v2/movie.api
-          cd movie-rec-v2/movie.api
+          # Navigate to the working directory of the repo
+          cd /home/ubuntu/actions-runner/_work/movie-rec-v2/movie-rec-v2/movie.api || exit 1
+          
+          # Activate the virtual environment
+          source /home/ubuntu/.venv/bin/activate
+          
+          # Pull latest changes
           git pull origin main
+          
           # Restart the FastAPI server
           pkill -f "uvicorn" || true
           nohup uvicorn main:app --host 0.0.0.0 --port 8000 > log.txt 2>&1 &
