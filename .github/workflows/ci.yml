@@ -5,20 +5,29 @@ on:
     branches: [ "main" ]
 
 jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
+  deploy-movie-api:
+    runs-on: self-hosted # Use the self-hosted runner
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Login Dockerhub
-      env:
-        DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
-        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
-      run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      
-    - name: Build the Docker image
-      run: docker build -t varsubham/cicd-pipeline .
-    - name: Push to Dockerhub
-      run: docker push varsubham/cicd-pipeline:latest
+      # Step 1: Checkout the repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Step 2: Deploy Movie API
+      - name: Deploy Movie API
+        run: |
+          # Navigate to the movie-api directory
+          cd ~/movie-rec-v2/movie-api
+
+          # Pull the latest changes
+          git pull origin main
+
+          # Activate virtual environment
+          source venv/bin/activate
+
+          # Install dependencies
+          pip install -r requirements.txt
+
+          # Restart the FastAPI server
+          pkill -f "uvicorn" || true
+          nohup uvicorn main:app --host 0.0.0.0 --port 8000 > log.txt 2>&1 &
