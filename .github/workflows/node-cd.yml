@@ -11,8 +11,10 @@ jobs:
     runs-on: self-hosted
 
     steps:
+      - name: Checkout repository
+        run: cd /home/ubuntu/movie-rec-v2/server
       - name: Pull Docker image
-        run: sudo docker pull arzun99/movieflix-node-server:latest
+        run: sudo docker pull arzun99/movieflix-node-server
       - name: Delete Old docker container
         run: sudo docker rm -f cicd-pipeline-container || true
       - name: Run Docker Container
