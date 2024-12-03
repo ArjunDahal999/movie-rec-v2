@@ -6,11 +6,12 @@ const envFilePath = path.resolve(path.dirname(__dirname), "../.env");
 
 dotenv.config({ path: envFilePath });
 export default cleanEnv(process.env, {
-    PORT: port(),
-    MONGO_URL: str(),
-    SMTP_HOST: str(),
-    SMTP_PORT: str(),
-    SMTP_MAIL: str(),
-    SMTP_PASSWORD: str(),
-    JWT_URL: str()
+  PORT: port(),
+  MONGO_URL: str(),
+  SMTP_HOST: str(),
+  SMTP_PORT: str(),
+  SMTP_MAIL: str(),
+  SMTP_PASSWORD: str(),
+  JWT_REFRESH_TOKEN_SECRET: str(),
+  JWT_ACCESS_TOKEN_SECRET: str(),
 });

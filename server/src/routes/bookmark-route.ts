@@ -1,8 +1,7 @@
-import express from 'express';
-import { addBookMark } from '../controller/bookMarkController/add-bookmark';
-import { deleteBookMark } from '../controller/bookMarkController/delete-bookmark';
-import { getAllBookMarks } from '../controller/bookMarkController/get-all-bookmark';
-
+import express from "express";
+import { addBookMark } from "../controller/bookMarkController/add-bookmark";
+import { deleteBookMark } from "../controller/bookMarkController/delete-bookmark";
+import { getAllBookMarks } from "../controller/bookMarkController/get-all-bookmark";
 
 const router = express.Router();
 
@@ -12,6 +11,27 @@ const router = express.Router();
  *   name: BookMark
  *   description: Operations related to managing todo items
  */
+
+/**
+ * @swagger
+ * /api/v1/test:
+ *   get:
+ *     tags:
+ *       - BookMark
+ *     summary: Test endpoint
+ *     description: Returns a simple greeting message
+ *     responses:
+ *       200:
+ *         description: Successful operation
+ *         content:
+ *           text/plain:
+ *             schema:
+ *               type: string
+ *               example: Hello World!
+ */
+router.get("/test", (req, res) => {
+  res.send("Hello World!");
+});
 
 /**
  * @swagger
@@ -82,7 +102,7 @@ const router = express.Router();
  *                   type: string
  *                   example: BookMarked
  */
-router.post('/add-bookmark', addBookMark);
+router.post("/add-bookmark", addBookMark);
 
 /**
  * @swagger
@@ -105,8 +125,7 @@ router.post('/add-bookmark', addBookMark);
  *         description: Internal server error.
  */
 
-router.delete('/delete-bookmark', deleteBookMark);
-
+router.delete("/delete-bookmark", deleteBookMark);
 
 /**
  * @swagger
@@ -159,7 +178,6 @@ router.delete('/delete-bookmark', deleteBookMark);
  *         description: Internal server error.
  */
 
-
-router.get('/get-all-bookmark', getAllBookMarks);
+router.get("/get-all-bookmark", getAllBookMarks);
 
 export default router;

@@ -1,19 +1,44 @@
-
-import express from 'express'
-import 
-{
-    activateAccount,
-    forgotPassword,
-    loginToAccount,
-    registerAccount,
-    resetPassword
-} from '../controller/authController';
-import { userAuthenication } from '../middleware/authenticate-user';
-import { logout } from '../controller/authController/logout-controller';
-
-
+import express from "express";
+import {
+  activateAccount,
+  forgotPassword,
+  generateAccessTokenFromRefreshToken,
+  loginToAccount,
+  registerAccount,
+  resetPassword,
+} from "../controller/authController";
+import { userAuthenication } from "../middleware/authenticate-user";
+import { logout } from "../controller/authController/logout-controller";
 
 const router = express.Router();
+
+/**
+ * @swagger
+ * /api/v1/refresh:
+ *   post:
+ *     tags:
+ *       - UserAuth
+ *     summary: Refresh.
+ *     description: Refresh .
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Token refreshed successfully.
+ *       401:
+ *         description: Unauthorized - Invalid refresh token.
+ *       500:
+ *         description: Internal server error.
+ */
+router.post("/refresh", generateAccessTokenFromRefreshToken);
+
 /**
  * @swagger
  * /api/v1/registerAccount:
@@ -41,7 +66,7 @@ const router = express.Router();
  *       500:
  *         description: Internal server error.
  */
-router.post('/registerAccount', registerAccount);
+router.post("/registerAccount", registerAccount);
 
 /**
  * @swagger
@@ -60,8 +85,10 @@ router.post('/registerAccount', registerAccount);
  *             properties:
  *               email:
  *                 type: string
+ *                 default: dahalarjun404@gmail.com
  *               password:
  *                 type: string
+ *                 default: 11111111
  *     responses:
  *       200:
  *         description: Login successful.
@@ -70,7 +97,7 @@ router.post('/registerAccount', registerAccount);
  *       500:
  *         description: Internal server error.
  */
-router.post('/loginToAccount', loginToAccount);
+router.post("/loginToAccount", loginToAccount);
 
 /**
  * @swagger
@@ -101,7 +128,7 @@ router.post('/loginToAccount', loginToAccount);
  *       500:
  *         description: Internal server error.
  */
-router.post('/activateAccount', activateAccount);
+router.post("/activateAccount", activateAccount);
 
 /**
  * @swagger
@@ -128,7 +155,7 @@ router.post('/activateAccount', activateAccount);
  *       500:
  *         description: Internal server error.
  */
-router.post('/forgotPassword', forgotPassword);
+router.post("/forgotPassword", forgotPassword);
 
 /**
  * @swagger
@@ -163,8 +190,7 @@ router.post('/forgotPassword', forgotPassword);
  *       500:
  *         description: Internal server error.
  */
-router.post('/resetPassword', resetPassword);
-
+router.post("/resetPassword", resetPassword);
 
 /**
  * @swagger
@@ -179,9 +205,9 @@ router.post('/resetPassword', resetPassword);
  *         description: Logout successful.
  *       500:
  *         description: Internal server error.
- *     
+ *
  */
 
-router.get('/logout', userAuthenication, logout)
+router.get("/logout", userAuthenication, logout);
 
-export default router
+export default router;
