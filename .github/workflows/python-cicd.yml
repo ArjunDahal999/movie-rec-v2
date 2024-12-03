@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy-movie-api:
-    runs-on: self-hosted
+    runs-on: [self-hosted, runner-1]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
