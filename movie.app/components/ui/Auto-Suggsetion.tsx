@@ -2,10 +2,13 @@ import { Link } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
 import { FilmIcon } from 'lucide-react-native';
+import { activePythonURL } from '~/lib/axios-config';
 
 export const getAutoSuggestion = async (movieName: string) => {
   try {
-    const response = await fetch(`http://13.60.189.142/autocomplete/${movieName}`);
+    const env = process.env.EXPO_PUBLIC_PYTHON_API_URL + '/autocomplete/' + movieName;
+    console.log(env);
+    const response = await fetch(`${activePythonURL}/autocomplete/${movieName}`);
     const { data } = await response.json();
     if (data) {
       return { success: true, data };

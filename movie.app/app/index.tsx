@@ -12,11 +12,14 @@ export default function Home() {
       <Stack.Screen options={{ title: 'Home', headerShown: false }} />
       <SafeAreaProvider className=" bg-black">
         <SafeAreaView className=" flex-1 items-center   bg-black p-0" edges={['top']}>
-          <View>
-            <Image source={require('../assets/MainLogo.png')} style={{ width: 150, height: 150 }} />
-          </View>
-          <MovieFlixHero />
           <ScrollView className=" flex-1 ">
+            <View className=" flex items-center gap-y-2">
+              <Image
+                source={require('../assets/MainLogo.png')}
+                style={{ width: 150, height: 150 }}
+              />
+              <MovieFlixHero />
+            </View>
             {/* <FeaturedMovie /> */}
             <TopGrossingMovies />
             <TopPopularMovies />

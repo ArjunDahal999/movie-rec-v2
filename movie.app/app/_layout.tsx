@@ -6,6 +6,7 @@ import { Stack } from 'expo-router';
 import { AppStateStatus, Platform } from 'react-native';
 import * as SystemUI from 'expo-system-ui';
 import { useEffect } from 'react';
+import { StatusBar } from 'expo-status-bar';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { retry: 2 } },
@@ -22,6 +23,7 @@ export default function Layout() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <StatusBar hidden style="dark" />
       <Stack />
     </QueryClientProvider>
   );

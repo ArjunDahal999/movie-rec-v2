@@ -17,12 +17,12 @@ export default function MovieFlixHero() {
 
   return (
     <View className=" relative">
-      <Text className=" text-center text-4xl font-bold text-white">
+      <Text className=" pb-4 text-center text-3xl font-bold text-white">
         Stream thousands of movies and TV shows instantly
       </Text>
-      <View className=" my-2">
+      <View className="">
         <TextInput
-          className="  w-full rounded-lg bg-white py-4 pl-4 indent-2 text-black"
+          className="  w-[350px] rounded-lg bg-white  py-4 pl-4  text-black"
           value={value}
           onChangeText={handleChange}
           autoComplete="off"
