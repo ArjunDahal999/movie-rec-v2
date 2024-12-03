@@ -127,7 +127,7 @@ def predict_movies(movie: str, top_n: int = 15):
     # sorted_similar_movies = sorted(euclid_distance, key=lambda x: x[1], reverse=False)
     
     # Return top N similar movies
-    return [movie_data.iloc[movie[0]]['title'] for movie in sorted_similar_movies[0:top_n+1]]
+    return [movie_data.iloc[movie[0]]['title'] for movie in sorted_similar_movies[1:top_n+1]]
 
 @app.get('/')
 def home():

@@ -5,7 +5,7 @@ import { FilmIcon } from 'lucide-react-native';
 
 export const getAutoSuggestion = async (movieName: string) => {
   try {
-    const response = await fetch(`http://13.49.18.64/autocomplete/${movieName}`);
+    const response = await fetch(`http://13.60.189.142/autocomplete/${movieName}`);
     const { data } = await response.json();
     if (data) {
       return { success: true, data };
