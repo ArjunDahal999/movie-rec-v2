@@ -58,7 +58,7 @@ app.use("/api/v1", allRouter);
 
 // Test route
 app.get("/", (req, res) => {
-  res.json({ message: "Server is workingss " });
+  res.json({ message: "Server is working" });
 });
 
 // Error middleware
