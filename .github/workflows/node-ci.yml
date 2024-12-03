@@ -29,4 +29,4 @@ jobs:
         with:
           context: ./server
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/your-image-name:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/movieflix-node-server:latest
