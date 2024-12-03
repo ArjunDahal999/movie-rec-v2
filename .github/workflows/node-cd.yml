@@ -1,0 +1,19 @@
+name: Node CD
+
+on:
+  workflow_run:
+    workflows: ["Node CI"]
+    types:
+      - completed
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull Docker image
+        run: sudo docker pull arzun99/movieflix-node-server:latest
+      - name: Delete Old docker container
+        run: sudo docker rm -f cicd-pipeline-container || true
+      - name: Run Docker Container
+        run: sudo docker run -d -p 4000:4000 --name cicd-pipeline-container arzun99/movieflix-node-server:latest
