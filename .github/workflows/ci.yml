@@ -2,13 +2,16 @@ name: CI Pipeline
 on:
   push:
     branches: ["main"]
+      paths:
+      - 'movie.api/**'
+
 jobs:
   deploy-movie-api:
     runs-on: self-hosted
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      
+
       - name: Create Systemd Service File
         run: |
           # Create a systemd service file for the movie recommendation API
@@ -33,16 +36,16 @@ jobs:
         run: |
           # Navigate to the project directory
           cd /home/ubuntu/movie-rec-v2/movie.api
-          
+
           # Activate virtual environment and update requirements
           source /home/ubuntu/.venv/bin/activate
           git pull
           pip install -r requirements.txt
-          
+
           # Reload systemd, restart the service
           sudo systemctl daemon-reload
           sudo systemctl restart movie-rec-api
           sudo systemctl enable movie-rec-api
-          
+
           # Optional: Check service status
           sudo systemctl status movie-rec-api
