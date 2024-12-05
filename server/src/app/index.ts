@@ -55,6 +55,9 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 // Routes
 app.use("/api/v1", allRouter);
+app.use("/test", (req, res) => {
+  res.json({ message: "Server is working" });
+});
 
 // Test route
 app.get("/", (req, res) => {
