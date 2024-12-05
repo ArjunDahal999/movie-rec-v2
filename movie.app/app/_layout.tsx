@@ -24,7 +24,9 @@ export default function Layout() {
   return (
     <QueryClientProvider client={queryClient}>
       <StatusBar hidden style="dark" />
-      <Stack />
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
     </QueryClientProvider>
   );
 }

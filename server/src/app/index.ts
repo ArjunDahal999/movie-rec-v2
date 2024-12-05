@@ -46,6 +46,9 @@ const swaggerOptions = {
       {
         url: `http://localhost:${env.PORT}`,
       },
+      {
+        url: `http://13.61.2.1:4000`,
+      },
     ],
   },
   apis: ["./src/routes/*.ts"],

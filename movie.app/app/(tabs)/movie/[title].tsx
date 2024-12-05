@@ -1,8 +1,49 @@
-import React from 'react';
-import { View, Text, Image, ScrollView } from 'react-native';
+import React, { Suspense } from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import { Stack, useLocalSearchParams } from 'expo-router';
+import { useQuery } from '@tanstack/react-query';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { getMovieDetails } from '~/action/get-movie-detail';
+import { getRecommendedMovie } from '~/action/get-recommended-movie';
+import { FlashList } from '@shopify/flash-list';
+import { MovieCard } from '~/components/ui/Movie-card';
+import { MoviesType } from '~/types';
+
 import { Ionicons } from '@expo/vector-icons';
 import GetLazyImage from '~/components/ui/Get-Image';
 import { MovieType } from '~/types';
+
+export default function MovieScreen() {
+  const { title } = useLocalSearchParams();
+
+  const { data: movieDetails } = useQuery({
+    queryKey: ['movie-details', title],
+    queryFn: () => getMovieDetails(title as string),
+    staleTime: 1000 * 60 * 60 * 24,
+    retry: 1,
+  });
+
+  const { data: recommendations } = useQuery({
+    queryKey: ['movie-recommendations', title],
+    queryFn: () => getRecommendedMovie(title as string),
+    staleTime: 1000 * 60 * 60 * 24,
+    retry: 1,
+  });
+
+  return (
+    <>
+      <Stack.Screen options={{ headerShown: false }} />
+      <SafeAreaProvider>
+        <SafeAreaView className=" bg-black">
+          <ScrollView>
+            {movieDetails && <MovieDetailContainer data={movieDetails.data!} />}
+            {recommendations && <RecommendedMovieContainer data={recommendations.data!} />}
+          </ScrollView>
+        </SafeAreaView>
+      </SafeAreaProvider>
+    </>
+  );
+}
 
 const MovieDetailContainer = ({ data }: { data: MovieType }) => {
   return (
@@ -63,4 +104,23 @@ const MovieDetailContainer = ({ data }: { data: MovieType }) => {
   );
 };
 
-export default MovieDetailContainer;
+const RecommendedMovieContainer = ({ data }: { data: MoviesType[] }) => {
+  return (
+    <View className=" h-[450px] bg-black py-4">
+      <View className="flex-row items-center justify-center">
+        <Text className="my-4 text-center text-3xl font-bold text-white">Recommended</Text>
+        <Text className="mx-2 my-4 text-center text-3xl font-bold text-red-500">Movies</Text>
+      </View>
+      <FlashList
+        className="h-[400px]"
+        data={data}
+        renderItem={({ item }) => <MovieCard data={item} />}
+        keyExtractor={(item) => item.title}
+        showsHorizontalScrollIndicator={false}
+        horizontal
+        estimatedItemSize={200}
+        contentContainerStyle={{ paddingVertical: 16 }}
+      />
+    </View>
+  );
+};
