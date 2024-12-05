@@ -10,10 +10,8 @@ RUN npm install
 # Copy the rest of the app (including .env) into the image
 COPY . . 
 
-RUN npm install pm2 -g
-
 EXPOSE 4000 
 
 RUN npm run build
 
-CMD ["pm2-runtime", "start", "ecosystem.config.js"]
+ CMD ["npm","start"]
