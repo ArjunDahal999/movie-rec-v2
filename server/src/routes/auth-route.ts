@@ -7,7 +7,6 @@ import {
   registerAccount,
   resetPassword,
 } from "../controller/authController";
-import { userAuthenication } from "../middleware/authenticate-user";
 import { logout } from "../controller/authController/logout-controller";
 
 const router = express.Router();
@@ -208,6 +207,6 @@ router.post("/resetPassword", resetPassword);
  *
  */
 
-router.get("/logout", userAuthenication, logout);
+router.get("/logout", logout);
 
 export default router;

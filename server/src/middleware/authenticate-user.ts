@@ -4,7 +4,7 @@ import env from "../utils/validate-ENV";
 import { UserModel } from "../models/userModel/user-model";
 import ErrorHandler from "./error-handeler";
 
-export const userAuthenication = async (req: Request, res: Response, next: NextFunction) => {
+export const isUserAuthenciated = async (req: Request, res: Response, next: NextFunction) => {
   let token;
   try {
     if (
@@ -13,7 +13,6 @@ export const userAuthenication = async (req: Request, res: Response, next: NextF
     ) {
       token = req.cookies.access_token || req.headers?.authorization?.split(" ")[1];
     }
-    console.log("token", token);
     if (!token) return res.status(400).json({ success: false, message: "Not logged In" });
     const decodedToken: any = jwt.verify(
       token,

@@ -9,9 +9,9 @@ import ErrorHandler from "../../middleware/error-handeler";
 export const registerAccount = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { username, email, password } = req.body;
-
+    console.log(username, email, password);
     //zod validation
-    registerFormSchema.parse(req.body);
+    // registerFormSchema.parse({ username, email, password });
 
     // Check if email is already registered
     const existingEmailUser = await UserModel.findOne({ email });

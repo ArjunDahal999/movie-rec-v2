@@ -1,6 +1,7 @@
 export type ApiResponse<T> = {
   success: boolean;
-  data: T | undefined;
+  data?: T;
+  message?: string;
 };
 
 type MoviesType = {
