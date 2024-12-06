@@ -25,16 +25,15 @@ const RegisterScreen = () => {
   } = useForm<FormData>({
     resolver: zodResolver(FormSchema),
   });
-
   const registerMutation = useMutation({
     mutationFn: (data: FormData) => registerAccount(data.username, data.email, data.password),
-    onSuccess: (res) => {
+    onSuccess: (res, data) => {
       if (res.success) {
         Toast.show({
           type: 'success',
           text1: res.message,
         });
-        router.replace('/(auth)/login');
+        router.replace({ pathname: '/(auth)/activate-account', params: { email: data.email } });
       } else {
         Toast.show({
           type: 'error',

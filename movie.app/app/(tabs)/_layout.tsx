@@ -1,7 +1,7 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { HomeIcon, Settings2Icon, UserIcon } from 'lucide-react-native';
+import { BookmarkIcon, HomeIcon, Settings2Icon, UserIcon } from 'lucide-react-native';
 
 export default function TabLayout() {
   return (
@@ -32,10 +32,10 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="setting"
+        name="bookmark"
         options={{
-          title: 'Setting',
-          tabBarIcon: ({ color }) => <Settings2Icon size={18} color={color} />,
+          title: 'Bookmarks',
+          tabBarIcon: ({ color }) => <BookmarkIcon size={18} color={color} />,
         }}
       />
     </Tabs>

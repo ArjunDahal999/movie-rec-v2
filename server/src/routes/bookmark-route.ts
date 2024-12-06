@@ -2,6 +2,7 @@ import express from "express";
 import { addBookMark } from "../controller/bookMarkController/add-bookmark";
 import { deleteBookMark } from "../controller/bookMarkController/delete-bookmark";
 import { getAllBookMarks } from "../controller/bookMarkController/get-all-bookmark";
+import { getBookMarks } from "../controller/bookMarkController/get-bookmark";
 
 const router = express.Router();
 
@@ -32,7 +33,6 @@ const router = express.Router();
 router.get("/test", (req, res) => {
   res.send("Hello World!");
 });
-
 /**
  * @swagger
  * /api/v1/add-bookmark:
@@ -48,27 +48,13 @@ router.get("/test", (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               directorcast:
- *                 type: string
- *               vote_count:
- *                 type: integer
- *               vote_average:
- *                 type: number
- *               tagline:
- *                 type: string
- *               status:
- *                 type: string
- *               cast:
- *                 type: string
- *               director:
- *                 type: string
  *               budget:
- *                 type: integer
+ *                 type: number
  *               genres:
  *                 type: string
- *               keywords:
- *                 type: string
  *               homepage:
+ *                 type: string
+ *               keywords:
  *                 type: string
  *               original_language:
  *                 type: string
@@ -82,11 +68,21 @@ router.get("/test", (req, res) => {
  *                 type: string
  *                 format: date
  *               revenue:
- *                 type: integer
- *               imageUrl:
- *                 type: string
+ *                 type: number
  *               runtime:
- *                 type: integer
+ *                 type: number
+ *               status:
+ *                 type: string
+ *               tagline:
+ *                 type: string
+ *               vote_average:
+ *                 type: number
+ *               vote_count:
+ *                 type: number
+ *               cast:
+ *                 type: string
+ *               director:
+ *                 type: string
  *     responses:
  *       '200':
  *         description: Successful operation
@@ -114,7 +110,7 @@ router.post("/add-bookmark", addBookMark);
  *     description: Delete a Bookmark by ID.
  *     parameters:
  *       - in: query
- *         name: id
+ *         name: movieTitle
  *         required: true
  *         schema:
  *           type: string
@@ -180,4 +176,33 @@ router.delete("/delete-bookmark", deleteBookMark);
 
 router.get("/get-all-bookmark", getAllBookMarks);
 
+/**
+ * @swagger
+ * /api/v1/get-bookmark:
+ *   get:
+ *     tags:
+ *       - BookMark
+ *     summary: Get  Bookmarks.
+ *     description: Retrieve all Bookmark for the authenticated user.
+ *     parameters:
+ *       - in: query
+ *         name: movieTitle
+ *         schema:
+ *           type: string
+ *           format: string
+ *         description: The movie title.
+ *     responses:
+ *       200:
+ *         description: Successful operation.
+ *         schema:
+ *           type: object
+ *           properties:
+ *             success:
+ *               type: boolean
+ *             message:
+ *               type: string
+ *       500:
+ *         description: Internal server error.
+ */
+router.get("/get-bookmark", getBookMarks);
 export default router;

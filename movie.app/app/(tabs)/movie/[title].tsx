@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import React, { Suspense, useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { getMovieDetails } from '~/action/get-movie-detail';
 import { getRecommendedMovie } from '~/action/get-recommended-movie';
@@ -12,6 +12,11 @@ import { MoviesType } from '~/types';
 import { Ionicons } from '@expo/vector-icons';
 import GetLazyImage from '~/components/ui/Get-Image';
 import { MovieType } from '~/types';
+import { BookMarkedIcon, BookmarkIcon } from 'lucide-react-native';
+import { bookMarkMovie, getMovieBookMarkState, removeBookMark } from '~/services/bookmark';
+import { useMovieImage } from '~/hooks/fetch-image';
+import Toast from 'react-native-toast-message';
+import { BOOK_MARKED_MOVIES_QUERY_KEY } from '~/config/query-key';
 
 export default function MovieScreen() {
   const { title } = useLocalSearchParams();
@@ -19,15 +24,11 @@ export default function MovieScreen() {
   const { data: movieDetails } = useQuery({
     queryKey: ['movie-details', title],
     queryFn: () => getMovieDetails(title as string),
-    staleTime: 1000 * 60 * 60 * 24,
-    retry: 1,
   });
 
   const { data: recommendations } = useQuery({
     queryKey: ['movie-recommendations', title],
     queryFn: () => getRecommendedMovie(title as string),
-    staleTime: 1000 * 60 * 60 * 24,
-    retry: 1,
   });
 
   return (
@@ -46,14 +47,75 @@ export default function MovieScreen() {
 }
 
 const MovieDetailContainer = ({ data }: { data: MovieType }) => {
+  const { imageUrl, isLoading: isImageLoading } = useMovieImage(data.original_title);
+
+  const queryClient = useQueryClient();
+  const bookMarkMutation = useMutation({
+    mutationFn: () => bookMarkMovie({ ...data, imageUrl }),
+    onSuccess: (res) => {
+      queryClient.invalidateQueries({});
+      if (res.success) {
+        Toast.show({
+          type: 'success',
+          text2: res.message,
+        });
+        setisMovieBookMarked(true);
+      }
+    },
+  });
+
+  const deleteBookMarkMutation = useMutation({
+    mutationFn: () => removeBookMark(data.original_title),
+    onSuccess: (res) => {
+      queryClient.invalidateQueries({});
+      if (res.success) {
+        Toast.show({
+          type: 'success',
+          text2: res.message,
+        });
+        setisMovieBookMarked(false);
+      }
+    },
+  });
+
+  const currentMovieBookMarkState = useQuery({
+    queryKey: ['movie-details'],
+    queryFn: () => getMovieBookMarkState(data.original_title as string),
+  });
+  const [isMovieBookMarked, setisMovieBookMarked] = useState(
+    currentMovieBookMarkState.data?.success
+  );
+
+  const handleBookMark = () => {
+    if (isMovieBookMarked) {
+      deleteBookMarkMutation.mutate();
+    } else {
+      bookMarkMutation.mutate();
+    }
+  };
   return (
     <View className=" bg-black">
       <View className="relative">
-        <GetLazyImage height={500} width={400} title={data.original_title} />
+        {isImageLoading && (
+          <View className=" items-center justify-center" style={{ height: 230, width: 150 }}>
+            <ActivityIndicator size="large" color="red" />
+          </View>
+        )}
+        <Image source={{ uri: imageUrl }} style={{ height: 500, width: 400 }} />
         <View className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-900 to-transparent" />
       </View>
-      <View className="px-4 pt-4">
-        <Text className="text-3xl font-bold text-white">{data.original_title}</Text>
+      <View className="px-8 pt-4">
+        <View className="flex flex-row items-center justify-between ">
+          <Text className="  text-3xl font-bold text-white">{data.original_title}</Text>
+          {/* bookmaark button */}
+          <TouchableOpacity
+            disabled={bookMarkMutation.isPending || deleteBookMarkMutation.isPending}
+            onPress={handleBookMark}
+            className=" rounded-xl border-2 border-slate-900 bg-black p-2">
+            <BookmarkIcon fill={isMovieBookMarked ? 'red' : ''} size={30} color="red" />
+          </TouchableOpacity>
+        </View>
+
         <Text className="mt-1 text-lg italic text-gray-400">{data.tagline}</Text>
 
         <View className="mt-2 flex-row items-center">

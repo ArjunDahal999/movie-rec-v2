@@ -2,6 +2,7 @@ export type ApiResponse<T> = {
   success: boolean;
   data?: T;
   message?: string;
+  status?: number;
 };
 
 type MoviesType = {
@@ -33,4 +34,41 @@ type MovieType = {
   vote_count: number;
   cast: string;
   director: string;
+};
+
+type BookMarkType = {
+  imageUrl: string;
+  index: number;
+  budget: number;
+  genres: string;
+  homepage: string;
+  id: number;
+  keywords: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  release_date: string;
+  revenue: number;
+  runtime: number;
+  status: string;
+  tagline: string;
+  vote_average: number;
+  vote_count: number;
+  cast: string;
+  director: string;
+};
+
+export type LoginToAccountResponseType = {
+  user: {
+    _id: string;
+    username: string;
+    email: string;
+    password: string;
+    createdAt: string;
+    __v: number;
+    emailActivated: string;
+  };
+  accessToken: string;
+  refreshToken: string;
 };

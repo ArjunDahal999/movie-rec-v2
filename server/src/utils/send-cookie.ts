@@ -27,9 +27,11 @@ export const sendUserSessionCookie = (
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 1 day
     })
     .json({
-      user,
-      accessToken,
-      refreshToken,
+      data: {
+        user,
+        accessToken,
+        refreshToken,
+      },
       success: true,
       message,
     })

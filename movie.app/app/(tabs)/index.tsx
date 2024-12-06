@@ -17,11 +17,10 @@ export default function Home() {
                 source={require('../../assets/MainLogo.png')}
                 style={{ width: 150, height: 150 }}
               />
-              {/* <MovieFlixHero /> */}
+              <MovieFlixHero />
             </View>
-            {/* <FeaturedMovie /> */}
-            {/* <TopGrossingMovies />
-            <TopPopularMovies /> */}
+            <TopGrossingMovies />
+            <TopPopularMovies />
           </ScrollView>
         </SafeAreaView>
       </SafeAreaProvider>

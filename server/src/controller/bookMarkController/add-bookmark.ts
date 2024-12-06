@@ -25,6 +25,18 @@ export const addBookMark = async (req: Request, res: Response, next: NextFunctio
       runtime,
     } = req.body;
     const userId = res.locals.user;
+
+    // Check if the movie is already bookmarked
+    const existingBookmark = await BookMarkModel.findOne({
+      user: userId,
+      original_title,
+      release_date: new Date(release_date).toISOString(),
+    });
+
+    if (existingBookmark) {
+      return res.json({ success: true, message: " Already BookMarked" });
+    }
+
     const addTask = await BookMarkModel.create({
       directorcast,
       vote_count,
@@ -47,6 +59,7 @@ export const addBookMark = async (req: Request, res: Response, next: NextFunctio
       imageUrl,
       user: userId,
     });
+
     res.json({ success: true, message: "BookMarked" });
   } catch (error) {
     console.log(error);
