@@ -39,10 +39,10 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: `http://localhost:${env.PORT}`,
+        url: `http://13.61.2.1:4000`,
       },
       {
-        url: `http://13.61.2.1:4000`,
+        url: `http://localhost:${env.PORT}`,
       },
     ],
   },
