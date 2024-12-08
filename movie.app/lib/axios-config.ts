@@ -14,7 +14,7 @@ const nodeURL = 'http://13.61.2.1:4000/api/v1';
 const localnodeURL = 'http://192.168.1.234:4000/api/v1';
 
 export const activePythonURL = awsURL;
-export const activeNodeURL = localnodeURL;
+export const activeNodeURL = nodeURL;
 // this is for the api client without the header
 export const pythonApiClientWithoutHeader = axios.create({
   baseURL: activePythonURL,

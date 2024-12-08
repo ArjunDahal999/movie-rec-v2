@@ -1,19 +1,17 @@
-'use client';
+"use client";
 
-import {  ChangeEvent, useState } from 'react';
-import Link from 'next/link';
-
-
+import { ChangeEvent, useState } from "react";
+import Link from "next/link";
 
 export default function MovieFlixHero() {
-  const [value, setValue] = useState(''); // Immediate value//hold valuethat user types in..
-  const [suggestionData,setSuggestionData] = useState()
-  const handleChange =  async(event:ChangeEvent<HTMLInputElement>) => {
-    console.log(event)
-    setValue( event.target.value)
-   const res  = await fetch('http://13.49.18.64/autocomplete/'+value)
-  const {data} = await res.json()//data contains list of suggestions based on user input.....AND DESTRUCTURE TO GET DAT AOBJECT
-   setSuggestionData(data)
+  const [value, setValue] = useState(""); // Immediate value//hold valuethat user types in..
+  const [suggestionData, setSuggestionData] = useState();
+  const handleChange = async (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event);
+    setValue(event.target.value);
+    const res = await fetch("http://13.60.189.142/autocomplete/" + value);
+    const { data } = await res.json(); //data contains list of suggestions based on user input.....AND DESTRUCTURE TO GET DAT AOBJECT
+    setSuggestionData(data);
   };
 
   return (
@@ -25,17 +23,20 @@ export default function MovieFlixHero() {
             <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
               MoviesFlix
             </h1>
-            <p className="mt-3 text-xl text-gray-400">
-            </p>
+            <p className="mt-3 text-xl text-gray-400"></p>
             <div className="relative mx-auto mt-7 max-w-xl sm:mt-12">
               {/* Form */}
               <form>
                 <div className="relative z-10 flex space-x-3 rounded-lg bg-slate-400/10 p-3">
                   <div className="flex-[1_0_0%]">
-                    <input value={value} onChange={(e)=>handleChange(e)}  placeholder='Search movie...' className=' w-full indent-3'/>
+                    <input
+                      value={value}
+                      onChange={(e) => handleChange(e)}
+                      placeholder="Search movie..."
+                      className=" w-full indent-3"
+                    />
                   </div>
-                  <SuggestionBox data={suggestionData!}/>
-             
+                  <SuggestionBox data={suggestionData!} />
                 </div>
               </form>
               {/* End Form */}
@@ -97,19 +98,19 @@ export default function MovieFlixHero() {
     </>
   );
 }
-const SuggestionBox = ({data}:{data:string[]})=>{
-  console.log(data)
-  return(
+const SuggestionBox = ({ data }: { data: string[] }) => {
+  console.log(data);
+  return (
     <>
-<div className="  bg-slate-400/10 absolute z-[99] top-12  flex flex-col  h-[50vh] w-full -left-3">
-    {data?.map((v)=>{
-      return (
-     <div className=" border-black/10  flex justify-start px-4 border-b-2">
-       <Link href={'/movie/'+v}>{v}</Link>
-     </div>
-      )
-    })}
-</div>
+      <div className="  bg-slate-400/10 absolute z-[99] top-12  flex flex-col  h-[50vh] w-full -left-3">
+        {data?.map((v) => {
+          return (
+            <div className=" border-black/10  flex justify-start px-4 border-b-2">
+              <Link href={"/movie/" + v}>{v}</Link>
+            </div>
+          );
+        })}
+      </div>
     </>
-  )
-}
+  );
+};

@@ -42,7 +42,7 @@ export const getMovieBookMarkState = async (movieTitle: string): Promise<ApiResp
   try {
     const { data } = await nodeApiClientWithHeader.get(`/get-bookmark?movieTitle=${movieTitle}`);
     return {
-      success: true,
+      success: data.success,
     };
   } catch (error: any) {
     return {

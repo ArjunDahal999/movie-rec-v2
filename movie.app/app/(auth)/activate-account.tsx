@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import { router, Stack, useLocalSearchParams } from 'expo-router';
 import React, { useState, useRef } from 'react';
 import { View, TextInput, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
 import Toast from 'react-native-toast-message';
@@ -30,6 +30,7 @@ const OTPInput = () => {
           type: 'success',
           text1: res.message,
         });
+        router.replace('/(auth)/login');
       } else {
         Toast.show({
           type: 'error',
@@ -50,7 +51,6 @@ const OTPInput = () => {
       });
       return;
     }
-    console.log(otpValue);
     activateMutation.mutate({ email, token: otpValue });
   };
 

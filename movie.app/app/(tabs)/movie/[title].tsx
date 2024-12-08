@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -59,7 +59,7 @@ const MovieDetailContainer = ({ data }: { data: MovieType }) => {
           type: 'success',
           text2: res.message,
         });
-        setisMovieBookMarked(true);
+        setIsMovieBookMarked(true);
       }
     },
   });
@@ -73,18 +73,23 @@ const MovieDetailContainer = ({ data }: { data: MovieType }) => {
           type: 'success',
           text2: res.message,
         });
-        setisMovieBookMarked(false);
+        setIsMovieBookMarked(false);
       }
     },
   });
 
-  const currentMovieBookMarkState = useQuery({
-    queryKey: ['movie-details'],
+  const { data: bookmarkData } = useQuery({
+    queryKey: [data.original_title],
     queryFn: () => getMovieBookMarkState(data.original_title as string),
+    enabled: !!data.original_title,
   });
-  const [isMovieBookMarked, setisMovieBookMarked] = useState(
-    currentMovieBookMarkState.data?.success
-  );
+  const [isMovieBookMarked, setIsMovieBookMarked] = useState(bookmarkData?.success ?? false);
+
+  useEffect(() => {
+    if (bookmarkData) {
+      setIsMovieBookMarked(bookmarkData.success);
+    }
+  }, [bookmarkData]);
 
   const handleBookMark = () => {
     if (isMovieBookMarked) {
