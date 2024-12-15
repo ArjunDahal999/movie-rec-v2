@@ -51,6 +51,9 @@ const RecommendedMovieSection = ({
                 <p className="text-sm font-medium">
                   {formatRevenue(movie?.revenue!)}
                 </p>
+                <p className="mb-1 text-sm text-muted-foreground">
+                  Distace. {movie?.similarity_score}
+                </p>
               </CardContent>
             </Card>
           </Link>

@@ -10,6 +10,7 @@ type MoviesType = {
   release_date: string;
   popularity: number;
   overview: string;
+  similarity_score: number;
 };
 
 type MovieType = {

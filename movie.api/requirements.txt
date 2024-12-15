@@ -3,4 +3,6 @@ fastapi
 pydantic
 pandas
 uvicorn
+matplotlib
+seaborn
 

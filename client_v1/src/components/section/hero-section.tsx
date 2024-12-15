@@ -2,6 +2,8 @@
 
 import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 import { useDebouncedState } from '@mantine/hooks';
 
 import {
@@ -22,12 +24,15 @@ import AutoSuggestionBox from '../auto-suggestion-box';
 
 export default function MovieFlixHero() {
   const [value, setValue] = useState(''); // Immediate value
-  const [searchText, setSearchText] = useDebouncedState('', 500);
-
+  const router = useRouter();
   // Update both the immediate and debounced states
   const handleChange = (event: any) => {
     setValue(event.target.value);
-    setSearchText(event.target.value);
+  };
+
+  const handleSearch = (event: any) => {
+    event.preventDefault();
+    router.push(`/query/${value}`);
   };
 
   return (
@@ -44,7 +49,7 @@ export default function MovieFlixHero() {
             </p>
             <div className="relative mx-auto mt-7 max-w-xl sm:mt-12">
               {/* Form */}
-              <form>
+              <form onSubmit={handleSearch}>
                 <div className="relative z-10 flex space-x-3 rounded-lg bg-slate-400/10 p-3">
                   <div className="flex-[1_0_0%]">
                     <Label htmlFor="movie" className="sr-only">
@@ -58,12 +63,9 @@ export default function MovieFlixHero() {
                       id="movie"
                       placeholder="Search movies & TV shows"
                     />
-                    {searchText.length > 0 && (
-                      <AutoSuggestionBox movieName={searchText} />
-                    )}
                   </div>
                   <div className="flex-[0_0_auto]">
-                    <Button size="icon" variant="secondary">
+                    <Button type="submit" size="icon" variant="secondary">
                       <PlayCircleIcon className="text-red-500" />
                     </Button>
                   </div>

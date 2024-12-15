@@ -49,7 +49,7 @@ const AutoSuggestionBox = ({ movieName }: { movieName: string }) => {
       )}
 
       {autoSuggestionData.length > 0 && (
-        <Card className="absolute z-10 mt-1 w-full rounded-md bg-background/90 py-4 shadow-lg transition duration-1000 ease-in-out">
+        <Card className="absolute z-10 mt-1 w-[400px] rounded-md bg-background/90 py-4 shadow-lg transition duration-1000 ease-in-out">
           <ul className="max-h-60 overflow-auto py-1">
             {autoSuggestionData.map((suggestion: any, index: any) => (
               <Link href={`/movie/${suggestion}`} key={index}>

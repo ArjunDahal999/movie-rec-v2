@@ -9,11 +9,14 @@ export const getRecommendedMovie = async (
     const response = await pythonApiClientWithoutHeader.get(
       `/predict/${title}`
     );
+
+    console.log('response:', response.data);
     return {
       success: true,
-      data: response.data.data,
+      data: response.data,
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       data: undefined,

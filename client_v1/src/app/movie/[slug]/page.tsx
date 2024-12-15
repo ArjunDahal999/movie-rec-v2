@@ -1,7 +1,5 @@
 import React, { Suspense } from 'react';
 
-import { Metadata, ResolvingMetadata } from 'next';
-
 import { getMovieDetails } from '@/action/get-movie-detail';
 import { getRecommendedMovie } from '@/action/get-recommended-movie';
 
