@@ -5,13 +5,13 @@ import { BookMarkModel } from "../../models/bookMarkModel/bookmark-model";
 
 export const deleteBookMark = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { movieTitle } = req.query;
+    const { title } = req.query;
     const userId = res.locals.user;
 
     // Check if the task exists for the given user
     const bookMarkToDelete = await BookMarkModel.findOneAndDelete({
       user: userId,
-      original_title: movieTitle,
+      original_title: title,
     });
 
     if (!bookMarkToDelete) {

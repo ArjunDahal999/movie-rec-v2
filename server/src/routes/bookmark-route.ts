@@ -102,15 +102,15 @@ router.post("/add-bookmark", addBookMark);
 
 /**
  * @swagger
- * /api/v1/delete-bookmark:
- *   delete:
+ * /api/v1/remove-bookmark:
+ *   get:
  *     tags:
  *       - BookMark
  *     summary: Delete a Bookmark.
  *     description: Delete a Bookmark by ID.
  *     parameters:
  *       - in: query
- *         name: movieTitle
+ *         name: title
  *         required: true
  *         schema:
  *           type: string
@@ -121,7 +121,7 @@ router.post("/add-bookmark", addBookMark);
  *         description: Internal server error.
  */
 
-router.delete("/delete-bookmark", deleteBookMark);
+router.get("/remove-bookmark", deleteBookMark);
 
 /**
  * @swagger

@@ -17,7 +17,7 @@ export const sendUserSessionCookie = (
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,
     sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
-    expires: new Date(Date.now() + 20 * 60 * 1000), // 20 minutes
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 1 day
   });
   res
     .cookie("refresh_token", refreshToken, {

@@ -17,7 +17,7 @@ dotenv.config({ path: envFilePath });
 // });
 
 const env = {
-  PORT: 4000,
+  PORT: 5000,
   MONGO_URL:
     "mongodb+srv://admin-arjun:9pJ9D3YiqtYwXipM@cluster0.ldmnk.mongodb.net/?retryWrites=true&w=majority",
   SMTP_HOST: "smtp.gmail.com",

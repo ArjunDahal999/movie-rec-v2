@@ -29,7 +29,6 @@ interface MovieType {
   director: string;
 }
 const MoviePage = async ({ params }: { params: any }) => {
-  console.log(params.title);
   const data = await fetch("http://13.60.189.142/" + params.title);
   const movieJsonData = await data.json();
   const recData = await fetch("http://13.60.189.142//predict/" + params.title);

@@ -121,10 +121,12 @@ def predict_movies(movie: str, top_n: int = 15):
             'director': movie_data.iloc[index]['director'],
             'overview': movie_data.iloc[index]['overview'],
             'revenue': float(movie_data.iloc[index]['revenue']),
-            'similarity_score': float(score)
+            'similarity_score': float(score),
+            'tfidf_vector1': tfidf_vectors[index_of_the_movie],
+            'tfidf_vector2': tfidf_vectors[index],
+            'common_words': set(tfidf_vectors[index_of_the_movie].keys()) & set(tfidf_vectors[index].keys())
         }
     
-    print(sorted_similar_movies[0:top_n+1])
     return [get_movie_details(movie[0], movie[1]) for movie in sorted_similar_movies[0:top_n+1]]
     
 

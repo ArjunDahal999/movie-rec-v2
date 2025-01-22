@@ -17,7 +17,7 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: ["*"],
+    origin: ["http://localhost:3000", "http://localhost:3001"],
     methods: ["*"],
     credentials: true,
   })
@@ -38,9 +38,6 @@ const swaggerOptions = {
       description: "API documentation for your application",
     },
     servers: [
-      {
-        url: `http://13.61.2.1:4000`,
-      },
       {
         url: `http://localhost:${env.PORT}`,
       },
