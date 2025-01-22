@@ -1,8 +1,6 @@
 'use client';
 
-import { ChangeEvent, ChangeEventHandler, useState } from 'react';
-
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import { useDebouncedState } from '@mantine/hooks';
 
@@ -24,17 +22,13 @@ import AutoSuggestionBox from '../auto-suggestion-box';
 
 export default function MovieFlixHero() {
   const [value, setValue] = useState(''); // Immediate value
-  const router = useRouter();
+  const [searchText, setSearchText] = useDebouncedState('', 500);
+
   // Update both the immediate and debounced states
   const handleChange = (event: any) => {
     setValue(event.target.value);
+    setSearchText(event.target.value);
   };
-
-  const handleSearch = (event: any) => {
-    event.preventDefault();
-    router.push(`/query/${value}`);
-  };
-
   return (
     <>
       {/* Hero */}
@@ -49,8 +43,9 @@ export default function MovieFlixHero() {
             </p>
             <div className="relative mx-auto mt-7 max-w-xl sm:mt-12">
               {/* Form */}
-              <form onSubmit={handleSearch}>
-                <div className="relative z-10 flex space-x-3 rounded-lg bg-slate-400/10 p-3">
+
+              <form>
+                <div className="relative z-10 flex max-w-[500px] space-x-3 rounded-lg bg-slate-400/10 p-3">
                   <div className="flex-[1_0_0%]">
                     <Label htmlFor="movie" className="sr-only">
                       Search movies & TV shows
@@ -63,11 +58,9 @@ export default function MovieFlixHero() {
                       id="movie"
                       placeholder="Search movies & TV shows"
                     />
-                  </div>
-                  <div className="flex-[0_0_auto]">
-                    <Button type="submit" size="icon" variant="secondary">
-                      <PlayCircleIcon className="text-red-500" />
-                    </Button>
+                    {searchText.length > 0 && (
+                      <AutoSuggestionBox movieName={searchText} />
+                    )}
                   </div>
                 </div>
               </form>

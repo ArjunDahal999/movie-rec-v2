@@ -4,26 +4,31 @@ import React, { useState } from 'react';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-import { useDebouncedState } from '@mantine/hooks';
+import { useUserStore } from '@/store/store';
 
 import { PlayCircleIcon } from 'lucide-react';
 
 import { MainLogo } from '../../../public/images';
-import AutoSuggestionBox from '../auto-suggestion-box';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { Label } from '../ui/label';
 
 const MainNavbar = () => {
-  const [value, setValue] = useState(''); // Immediate value
-  const [searchText, setSearchText] = useDebouncedState('', 500);
+  const authStaate = useUserStore();
 
+  const [value, setValue] = useState(''); // Immediate value
+  const router = useRouter();
   // Update both the immediate and debounced states
   const handleChange = (event: any) => {
     setValue(event.target.value);
-    setSearchText(event.target.value);
   };
+
+  const handleSearch = (event: any) => {
+    event.preventDefault();
+    router.push(`/query/${value}`);
+  };
+
   return (
     <>
       {/*  parent nav resposive for arragement for the compnents inside */}
@@ -39,31 +44,46 @@ const MainNavbar = () => {
             priority
           />
         </Link>
-        <div className="flex">
-          <form>
-            <div className="relative z-10 flex max-w-[400px] space-x-3 rounded-lg bg-slate-400/10 p-3">
-              <div className="flex-[1_0_0%]">
-                <Label htmlFor="movie" className="sr-only">
-                  Search movies & TV shows
-                </Label>
+        <div className="flex w-[400px] items-center">
+          <form onSubmit={handleSearch}>
+            <div className="relative z-10 flex space-x-3 rounded-lg bg-slate-400/10 p-3">
+              <div className="w-full">
                 <Input
                   value={value}
                   onChange={handleChange}
                   autoComplete="off"
-                  className="h-full bg-transparent placeholder:text-gray-400"
+                  className="h-full w-full bg-transparent placeholder:text-gray-400"
                   id="movie"
-                  placeholder="Search movies & TV shows"
+                  placeholder="example : James Bond movies"
                 />
-                {searchText.length > 0 && (
-                  <AutoSuggestionBox movieName={searchText} />
-                )}
+              </div>
+              <div className="">
+                <Button type="submit" size="icon" variant="secondary">
+                  <PlayCircleIcon className="text-red-500" />
+                </Button>
               </div>
             </div>
           </form>
-
-          <Button className="border-none text-primary" variant={'outline'}>
-            Login
-          </Button>
+          {authStaate.user ? (
+            <div className="flex items-center space-x-4">
+              <Button className="border-none text-primary" variant={'outline'}>
+                <Link href={'/bookmark'}>{authStaate.user.username}</Link>
+              </Button>
+              <Button
+                className="border-none text-primary"
+                variant={'outline'}
+                onClick={() => {
+                  authStaate.clearAuth();
+                }}
+              >
+                Logout
+              </Button>
+            </div>
+          ) : (
+            <Button className="border-none text-primary" variant={'outline'}>
+              <Link href={'/login'}>Login</Link>
+            </Button>
+          )}
         </div>
       </div>
     </>

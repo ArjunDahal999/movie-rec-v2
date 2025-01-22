@@ -10,5 +10,6 @@ export const nodeApiClientWithoutHeader = axios.create({
 });
 
 export const nodeApiClientWithHeader = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_NODE_API_BASE_URL,
+  baseURL: `${process.env.NEXT_PUBLIC_NODE_API_BASE_URL}/api/v1`,
+  withCredentials: true,
 });

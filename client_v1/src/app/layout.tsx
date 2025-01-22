@@ -3,7 +3,8 @@ import localFont from 'next/font/local';
 
 import './globals.css';
 
-import BackgroundBlob from '@/components/animation/blob';
+import { Toaster } from 'sonner';
+
 import MainNavbar from '@/components/navbar/main-navbar';
 import Provider from '@/components/provider/provider';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
@@ -35,9 +36,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider>
-          <MainNavbar />
           <ThemeToggle />
           {children}
+          <Toaster />
         </Provider>
       </body>
     </html>

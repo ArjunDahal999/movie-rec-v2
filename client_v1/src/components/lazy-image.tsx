@@ -9,7 +9,8 @@ const GetLazyImage = async ({ title }: { title: any }): Promise<any> => {
     const { data: imageData } = await axios.get(
       `https://www.myapifilms.com/imdb/idIMDB?title=${title}&token=e7a9efa9-2cd6-46e0-89f0-5026fd325f99`
     );
-    if (imageData)
+    console.log(imageData);
+    if (imageData.data?.movies[0]?.urlPoster)
       return (
         <Image
           alt="Movie Poster"

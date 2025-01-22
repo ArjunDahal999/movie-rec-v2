@@ -3,9 +3,8 @@
 import { useState } from 'react';
 
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-import { useUserStore } from '@/store/store';
 import { toast } from 'sonner';
 
 import { nodeApiClientWithoutHeader } from '@/lib/axios-config';
@@ -22,58 +21,61 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-export default function LoginForm() {
-  const [email, setEmail] = useState('dahalarjun404@gmail.com');
-  const [password, setPassword] = useState('11111111');
-  const [isLoading, setIsLoading] = useState(false);
+export default function RegisterForm() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const router = useRouter();
-  const userStore = useUserStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       e.preventDefault();
-      setIsLoading(true);
+      if (password !== confirmPassword) {
+        toast.error('Passwords do not match');
+        return;
+      }
       const { data } = await nodeApiClientWithoutHeader.post(
-        '/loginToAccount',
+        '/registerAccount',
         {
           email,
           password,
-        },
-        {
-          withCredentials: true,
+          username,
         }
       );
-      console.log(data.data.user);
-      userStore.setUser(data.data.user);
-      userStore.setTokens(
-        data.data.user.accessToken,
-        data.data.user.refreshToken
-      );
-      console.log(userStore);
-      toast.success('Logged in successfully');
-      router.push('/');
+      toast.success(data.message);
+      router.push('/checkmail');
     } catch (error: any) {
       if (error.response && error.response.data) {
         toast.error(error.response.data.message);
       } else {
-        console.log(error.message);
+        toast.error(error.message);
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <div className="grid min-h-[90vh] place-content-center">
-      <Card className="grid w-full max-w-md place-content-center">
+      <Card className="grid w-full min-w-[500px] max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Register</CardTitle>
           <CardDescription>
-            Enter your email and password to access your account.
+            Create a new account to get started.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                type="text"
+                placeholder="johndoe"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -95,18 +97,25 @@ export default function LoginForm() {
                 required
               />
             </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+              />
+            </div>
           </CardContent>
-          <CardFooter>
-            <Button disabled={isLoading} type="submit" className="w-full">
-              Sign In
+          <CardFooter className="flex flex-col items-center">
+            <Button type="submit" className="w-full">
+              Create Account
             </Button>
           </CardFooter>
         </form>
-        <Link
-          className="my-6 text-center text-sm text-primary"
-          href="/register"
-        >
-          Dont have an account ?{' '}
+        <Link className="my-6 text-center text-sm text-primary" href="/login">
+          Already have an account ?{' '}
         </Link>
       </Card>
     </div>

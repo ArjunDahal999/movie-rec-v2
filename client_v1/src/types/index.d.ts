@@ -1,6 +1,7 @@
 export type ApiResponse<T> = {
   success: boolean;
-  data: T | undefined;
+  data?: T | undefined;
+  message?: string;
 };
 
 type MoviesType = {
@@ -11,6 +12,21 @@ type MoviesType = {
   popularity: number;
   overview: string;
   similarity_score: number;
+};
+
+type RecommendedMovieType = {
+  title: string;
+  genres: string;
+  keywords: string;
+  tagline: string;
+  cast: string;
+  director: string;
+  overview: string;
+  revenue: number;
+  similarity_score: number;
+  tfidf_vector1: Record<string, number>;
+  tfidf_vector2: Record<string, number>;
+  common_words: string[];
 };
 
 type MovieType = {
