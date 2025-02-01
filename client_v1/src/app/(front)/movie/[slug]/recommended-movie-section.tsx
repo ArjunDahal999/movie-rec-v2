@@ -30,9 +30,12 @@ const RecommendedMovieSection = ({
         Recommended
         <span className="text-primary"> Movies </span>
       </h2>
-      <div className="grid grid-cols-5 space-x-4 p-4">
+      <div className="grid grid-cols-5 place-content-center place-items-center space-x-4 p-4">
         {recommendedData?.map((movie, index) => (
-          <Card className="w-[250px] shrink-0 border-none">
+          <Card
+            key={index}
+            className="w-[250px] shrink-0 grid-cols-2 border-none"
+          >
             <CardContent className="p-4">
               <div className="max-h-[300px] max-w-[300px] overflow-hidden rounded-xl">
                 <Suspense

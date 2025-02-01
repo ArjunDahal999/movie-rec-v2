@@ -98,13 +98,13 @@ def predict_movies(movie: str, top_n: int = 15):
     index_of_the_movie = movie_data[movie_data.title == close_match].index[0]
     
     # Compute similarity scores
-    similarity_scores_cosine = []
+   # similarity_scores_cosine = []
     similarity_scores_euclid = []
 
     for i in range(len(tfidf_vectors)):
-        score = cosine_similarity(tfidf_vectors[index_of_the_movie], tfidf_vectors[i]) # ( {"action": 0.67, "sci-fi": 0.44} ,{"action": 0.33, "adventure": 0.44} )
+        # score = cosine_similarity(tfidf_vectors[index_of_the_movie], tfidf_vectors[i]) # ( {"action": 0.67, "sci-fi": 0.44} ,{"action": 0.33, "adventure": 0.44} )
+        # similarity_scores_cosine.append((i, score))
         distance = euclidean_distance(tfidf_vectors[index_of_the_movie], tfidf_vectors[i])
-        similarity_scores_cosine.append((i, score))
         similarity_scores_euclid.append((i, distance))
 
     # Sort by similarity score

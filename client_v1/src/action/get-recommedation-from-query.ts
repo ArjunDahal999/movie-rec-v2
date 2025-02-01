@@ -1,4 +1,4 @@
-import { ApiResponse, MoviesType } from '@/types';
+import { ApiResponse } from '@/types';
 
 import { pythonApiClientWithoutHeader } from '@/lib/axios-config';
 

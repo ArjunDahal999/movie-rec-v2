@@ -49,4 +49,5 @@ type MovieType = {
   vote_count: number;
   cast: string;
   director: string;
+  imageUrl?: string;
 };

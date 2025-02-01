@@ -38,7 +38,8 @@ movies["combined_features"] = (
     movies["overview"].str.lower() + " " +
     movies["cast"].str.lower() + " " +
     movies["director"].str.lower() + " " +
-    movies["title"].str.lower()
+    movies["title"].str.lower()+
+    movies["original_title"].str.lower()
 )
 
 

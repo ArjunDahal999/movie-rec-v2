@@ -25,6 +25,9 @@ import { pythonApiClientWithoutHeader } from '@/lib/axios-config';
  * @remarks
  * Makes a GET request to the Python backend API endpoint `https//localhost:8000/predict/{title}`
  * Returns similar movies ranked by similarity score to the provided title
+ *
+ * const data = await fetch(https//localhost:8000/predict/{title})
+ * const res = data.json();
  */
 
 export const getRecommendedMovie = async (

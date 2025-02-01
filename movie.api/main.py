@@ -57,7 +57,6 @@ def getRecommendationFromQuery(query: str):
 
 @app.get('/predict/{moviename}')
 def predict_movies_endpoint(moviename: str):
-    print(predict_movies(moviename))
     return predict_movies(moviename)
 
 

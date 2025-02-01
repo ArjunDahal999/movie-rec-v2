@@ -5,7 +5,6 @@ export const getBookmark = async (title: string) => {
     const { data } = await nodeApiClientWithHeader.get(
       '/get-bookmark?movieTitle=' + title
     );
-    console.log(data);
     return data.success as boolean;
   } catch (error) {
     return false;
