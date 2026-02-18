@@ -18,12 +18,11 @@ dotenv.config({ path: envFilePath });
 
 const env = {
   PORT: 5000,
-  MONGO_URL:
-    "mongodb+srv://admin-arjun:9pJ9D3YiqtYwXipM@cluster0.ldmnk.mongodb.net/?retryWrites=true&w=majority",
+  MONGO_URL: "",
   SMTP_HOST: "smtp.gmail.com",
   SMTP_PORT: "465",
   SMTP_MAIL: "dahalarjun409@gmail.com",
-  SMTP_PASSWORD: "xafbbasoqenxxqye",
+  SMTP_PASSWORD: "",
   JWT_ACCESS_TOKEN_SECRET: "fasdfasdfa",
   JWT_REFRESH_TOKEN_SECRET: "afsdfadf",
 };
